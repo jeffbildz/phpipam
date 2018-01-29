@@ -1,16 +1,15 @@
-FROM debian:wheezy
+FROM ubuntu:xenial 
 
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
-                                && apt-get -y install apache2 libapache2-mod-php5 php5-mysql vim curl php5-gmp php5-ldap php-pear \
-                                && apt-get clean \
-                                && mkdir /var/www/html/
+                                && apt-get -y install apache2 libapache2-mod-php7.0 php7.0-mysql vim curl php7.0-gmp php7.0-ldap php-pear \
+                                && apt-get clean 
+                                
 
 ADD https://github.com/phpipam/phpipam/archive/master.tar.gz /tmp
 RUN tar -xzf /tmp/master.tar.gz -C /var/www/html --strip-components=1
 
-COPY 000-default.conf /etc/apache2/sites-available/default
-COPY config.php /var/www/html
+#COPY config.php /var/www/html
 
 VOLUME ["/ssl"]
 
@@ -27,14 +26,14 @@ ENV APACHE_PID_FILE /var/apache.pid
 ENV SSL_ENABLED false
 ENV PROXY_ENABLED false
 
-LABEL org.label-schema.build-date="2016-06-20T10:05:01Z" \
+LABEL org.label-schema.build-date="2018-01-29T10:05:01Z" \
             org.label-schema.docker.dockerfile="/Dockerfile" \
             org.label-schema.license="MIT" \
             org.label-schema.name="PHPIpam" \
             org.label-schema.url="https://rafpe.ninja" \
             org.label-schema.vcs-ref="d7ef28d" \
             org.label-schema.vcs-type="Git" \
-            org.label-schema.vcs-url="https://github.com/RafPe/docker-phpipam.git"
+            org.label-schema.vcs-url="https://github.com/jeffbildz/phpipam.git"
 
 
 EXPOSE 80 443
