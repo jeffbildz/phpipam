@@ -30,12 +30,10 @@ LABEL org.label-schema.build-date="2018-01-29T10:05:01Z" \
             org.label-schema.docker.dockerfile="/Dockerfile" \
             org.label-schema.license="MIT" \
             org.label-schema.name="PHPIpam" \
-            org.label-schema.url="https://rafpe.ninja" \
+            org.label-schema.url="https://github.com/jeffbildz" \
             org.label-schema.vcs-ref="d7ef28d" \
             org.label-schema.vcs-type="Git" \
             org.label-schema.vcs-url="https://github.com/jeffbildz/phpipam.git"
 
 
 EXPOSE 80 443
-
-CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
