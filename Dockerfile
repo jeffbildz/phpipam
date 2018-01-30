@@ -2,14 +2,14 @@ FROM ubuntu:xenial
 
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
-                                && apt-get -y install apache2 libapache2-mod-php7.0 php7.0-mysql vim curl php7.0-gmp php7.0-ldap php-pear \
+                                && apt-get -y install apache2 libapache2-mod-php7.0 php7.0-mysql vim curl php7.0-gmp php7.0-ldap php-pear php7.0-gd php7.0-mbstring \
                                 && apt-get clean 
                                 
 
 ADD https://github.com/phpipam/phpipam/archive/master.tar.gz /tmp
 RUN tar -xzf /tmp/master.tar.gz -C /var/www/html --strip-components=1
-
-#COPY config.php /var/www/html
+RUN cp /var/www/html/config.dist.php /var/www/html/config.php
+RUN ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf
 
 VOLUME ["/ssl"]
 
@@ -30,12 +30,10 @@ LABEL org.label-schema.build-date="2018-01-29T10:05:01Z" \
             org.label-schema.docker.dockerfile="/Dockerfile" \
             org.label-schema.license="MIT" \
             org.label-schema.name="PHPIpam" \
-            org.label-schema.url="https://rafpe.ninja" \
+            org.label-schema.url="https://github.com/jeffbildz" \
             org.label-schema.vcs-ref="d7ef28d" \
             org.label-schema.vcs-type="Git" \
             org.label-schema.vcs-url="https://github.com/jeffbildz/phpipam.git"
 
 
 EXPOSE 80 443
-
-CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
