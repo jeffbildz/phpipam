@@ -2,14 +2,14 @@ FROM ubuntu:xenial
 
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
-                                && apt-get -y install apache2 libapache2-mod-php7.0 php7.0-mysql vim curl php7.0-gmp php7.0-ldap php-pear \
+                                && apt-get -y install apache2 libapache2-mod-php7.0 php7.0-mysql vim curl php7.0-gmp php7.0-ldap php-pear php7.0-gd php7.0-mbstring \
                                 && apt-get clean 
                                 
 
 ADD https://github.com/phpipam/phpipam/archive/master.tar.gz /tmp
 RUN tar -xzf /tmp/master.tar.gz -C /var/www/html --strip-components=1
-
-#COPY config.php /var/www/html
+RUN cp /var/www/html/config.dist.php /var/www/html/config.php
+RUN ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf
 
 VOLUME ["/ssl"]
 
