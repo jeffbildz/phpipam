@@ -25,8 +25,8 @@ services:
           - MYSQL_DB_NAME=phpipam
           - MYSQL_DB_PORT=3306
        ports:
-          - "127.0.0.1:80"
-          - "127.0.0.1:443"
+         - 80:80/tcp
+         - 443:443/tcp
        restart: always
        depends_on:
           - mariadb

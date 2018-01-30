@@ -8,8 +8,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 
 ADD https://github.com/phpipam/phpipam/archive/master.tar.gz /tmp
 RUN tar -xzf /tmp/master.tar.gz -C /var/www/html --strip-components=1
-RUN cp /var/www/html/config.dist.php /var/www/html/config.php
-RUN ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf
+
+ADD docker_files/000-default.conf /etc/apache2/sites-available/ 
+ADD docker_files/config.php /var/www/html/ 
+
 
 VOLUME ["/ssl"]
 
