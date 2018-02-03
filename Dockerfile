@@ -1,13 +1,13 @@
-FROM php:5.6-apache
+FROM ubuntu:xenial 
+
 
 ENV PHPIPAM_SOURCE https://github.com/phpipam/phpipam/archive/
 ENV PHPIPAM_VERSION 1.3.1
 ENV WEB_REPO /var/www/html
 
-# Install required deb packages
-RUN apt-get update && apt-get -y upgrade && \
-    apt-get install -y php-pear php5-curl php5-mysql php5-json php5-gmp php5-mcrypt php5-ldap php5-gd php-net-socket libgmp-dev libmcrypt-dev libpng12-dev libfreetype6-dev libjpeg-dev libpng-dev libldap2-dev && \
-    rm -rf /var/lib/apt/lists/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+                                && apt-get -y install apache2 libapache2-mod-php7.0 php7.0-mysql vim curl php7.0-gmp php7.0-ldap php-pear php7.0-gd php7.0-mbstring \
+                                && apt-get clean 
 
 # Configure apache and required PHP modules
 RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd && \
